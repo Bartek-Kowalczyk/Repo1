@@ -33,24 +33,29 @@ displayUsers();
 function searchUsers() {
   const list = document.getElementById("searchp");
   const text = document.getElementById("searchtxt").value.toLowerCase();
+  const result = document.getElementById("resultsp");
 
   const filtered = users.filter(user =>
     user.name.toLowerCase().includes(text) ||
     user.email.toLowerCase().includes(text)
   );
+    const results = filtered.length;
   if(text === ""){
     list.innerHTML="Here you will see all the results that match your search."
   }
   else{
         if (filtered.length > 0) {
-        list.innerHTML = filtered.map(user => `
-        <li>
-            Imię: <span class="name">${user.name}</span>
-            Email: <span class="email">${user.email}</span>
-        </li>
-        `).join("");
+            list.innerHTML = filtered.map(user => `
+            <li>
+                Imię: <span class="name">${user.name}</span>
+                Email: <span class="email">${user.email}</span>
+            </li>
+            `).join("");
+            console.log("Amount of results: ", results);
+            result.innerHTML=`Znaleziono: ${results}`;
     } else {
         list.innerHTML = "Nie znaleziono użytkownika";
+        result.innerHTML = ""
     }
   }
 }
