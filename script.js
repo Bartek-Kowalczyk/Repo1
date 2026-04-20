@@ -1,5 +1,6 @@
 const url = "https://jsonplaceholder.typicode.com/users";
 let users = [];
+let sortDirection = "asc"
 async function displayUsers() {
 
     try {
@@ -39,6 +40,14 @@ function searchUsers() {
     user.name.toLowerCase().includes(text) ||
     user.email.toLowerCase().includes(text)
   );
+  filtered.sort((a, b) => {
+    if (sortDirection == "asc"){
+      return a.name.localeCompare(b.name);
+    }
+    else{
+      return b.name.localeCompare(a.name);
+    }
+  })
     const results = filtered.length;
   if(text === ""){
     list.innerHTML="Here you will see all the results that match your search."
@@ -85,4 +94,9 @@ function resetSearch() {
 
   info.innerHTML = "Here you will see all the results that match your search.";
   result.innerHTML = "";
+}
+
+function toggleSort(){
+  sortDirection = sortDirection === "asc" ? "desc" : "asc";
+  searchUsers();
 }
