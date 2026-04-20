@@ -104,6 +104,11 @@ function resetSearch() {
   info.innerHTML = "Here you will see all the results that match your search.";
   result.innerHTML = "";
 }
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        resetSearch();
+    }
+});
 
 function toggleSort(){
   sortDirection = sortDirection === "asc" ? "desc" : "asc";
