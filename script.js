@@ -11,16 +11,16 @@ async function displayUsers() {
 
         users = await response.json();
         
-        const List = document.getElementById("list");
+        const list = document.getElementById("list");
         if(users.length > 0){
-            List.innerHTML = users.map(user => `
+            list.innerHTML = users.map(user => `
                 <li>
                     Imię: <span class="name"> ${user.name} </span>
                     Email: <span class="email"> ${user.email} </span>
                 </li>
             `).join("");}
         else{
-            List.innerHTML="Nie ma danych w liście"
+            list.innerHTML="Nie ma danych w liście"
         }
 
     } 
