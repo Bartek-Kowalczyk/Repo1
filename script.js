@@ -32,7 +32,7 @@ displayUsers();
 
 function searchUsers() {
   const list = document.getElementById("searchp");
-  const text = document.getElementById("searchtxt").value.toLowerCase();
+  const text = document.getElementById("searchtxt").value.toLowerCase().trim();
   const result = document.getElementById("resultsp");
 
   const filtered = users.filter(user =>
