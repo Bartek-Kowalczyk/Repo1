@@ -67,3 +67,22 @@ function highlight(text, query){
     const regex = new RegExp(`(${query})`, "gi");
     return text.replace(regex, "<mark>$1</mark>");
 }
+
+function resetSearch() {
+  const input = document.getElementById("searchtxt");
+  const list = document.getElementById("list");
+  const info = document.getElementById("searchp");
+  const result = document.getElementById("resultsp");
+
+  input.value = "";
+
+  list.innerHTML = users.map(user => `
+    <li>
+      Imię: <span class="name">${user.name}</span>
+      Email: <span class="email">${user.email}</span>
+    </li>
+  `).join("");
+
+  info.innerHTML = "Here you will see all the results that match your search.";
+  result.innerHTML = "";
+}
