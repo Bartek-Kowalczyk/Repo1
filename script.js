@@ -1,6 +1,6 @@
 const url = "https://jsonplaceholder.typicode.com/users";
 let users = [];
-async function display() {
+async function displayUsers() {
 
     try {
         const response = await fetch(url);
@@ -25,10 +25,10 @@ async function display() {
 
     } 
     catch (error) {
-        console.error(error.message);
+        alert("There was an error with viewing the list");
   }
 }
-display();
+displayUsers();
 
 function searchUsers() {
   const list = document.getElementById("searchp");
