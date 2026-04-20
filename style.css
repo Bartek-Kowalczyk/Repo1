@@ -1,7 +1,22 @@
 body{
-    background-color: aqua;
+    background-color: lightgray;
 }
-header{
-    background-color: blueviolet;
+#container{
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 5px 3px 3px rgb(181, 146, 146);
+    width: 50%;
     font-size: 20px;
-}   
+}
+h1{
+    text-align: center;
+    color: darkorchid;
+}
+li{
+    padding: 5px;
+    color: lightslategray;
+}
+#container:hover{
+    background-color: azure;
+    border: 3px solid crimson;
+}

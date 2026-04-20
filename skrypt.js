@@ -15,12 +15,11 @@ async function wyswietlanie() {
 
         
         document.getElementById("listah").innerHTML =
-        users.map(user => `<li>${user.name}:    ${user.email}</li>`).join("");
+        users.map(user => `<li>Imię: ${user.name} Email:    ${user.email}</li>`).join("");
 
     } 
     catch (error) {
         console.error(error.message);
   }
 }
-
 wyswietlanie();
