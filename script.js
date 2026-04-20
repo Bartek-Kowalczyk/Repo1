@@ -48,8 +48,8 @@ function searchUsers() {
         if (filtered.length > 0) {
             list.innerHTML = filtered.map(user => `
             <li>
-                Imię: <span class="name">${user.name}</span>
-                Email: <span class="email">${user.email}</span>
+                Imię: <span class="name">${highlight(user.name, text)}</span>
+                Email: <span class="email">${highlight(user.email, text)}</span>
             </li>
             `).join("");
             result.innerHTML=`Znaleziono: ${results}`;
@@ -59,4 +59,11 @@ function searchUsers() {
         
     }
   }
+}
+
+function highlight(text, query){
+    if (!query) return text;
+
+    const regex = new RegExp(`(${query})`, "gi");
+    return text.replace(regex, "<mark>$1</mark>");
 }
