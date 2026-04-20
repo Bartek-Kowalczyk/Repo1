@@ -51,7 +51,6 @@ function searchUsers() {
                 Email: <span class="email">${user.email}</span>
             </li>
             `).join("");
-            console.log("Amount of results: ", results);
             result.innerHTML=`Znaleziono: ${results}`;
     } else {
         list.innerHTML = "Nie znaleziono użytkownika";
