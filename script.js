@@ -35,11 +35,20 @@ function searchUsers() {
   const list = document.getElementById("searchp");
   const text = document.getElementById("searchtxt").value.toLowerCase().trim();
   const result = document.getElementById("resultsp");
+  const mode = document.getElementById("searchMode").value;
 
-  const filtered = users.filter(user =>
-    user.name.toLowerCase().includes(text) ||
-    user.email.toLowerCase().includes(text)
-  );
+  const filtered = users.filter(user => {
+    if(mode === "name"){
+      return user.name.toLowerCase().includes(text);
+    }
+    if(mode === "email"){
+      return user.email.toLowerCase().includes(text);
+    }
+    return(
+      user.name.toLowerCase().includes(text) ||
+      user.email.toLowerCase().includes(text)
+    )
+});
   filtered.sort((a, b) => {
     if (sortDirection == "asc"){
       return a.name.localeCompare(b.name);

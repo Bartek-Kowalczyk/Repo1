@@ -11,6 +11,11 @@
         <h1>Użytkownicy</h1>
         <ul id="list"></ul>
 
+        <select id="searchMode">
+            <option value="both">Name & Email</option>
+            <option value="name">Name</option>
+            <option value="email">Email</option>
+        </select>
         <input type="text" placeholder="Search names/emails" id="searchtxt" oninput="searchUsers()">
         <input type="button" onclick="resetSearch()" value="Reset">
         <input type="button" onclick="toggleSort()" value="Sort direction">
