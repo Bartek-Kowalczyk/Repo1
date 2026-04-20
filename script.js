@@ -42,6 +42,7 @@ function searchUsers() {
     const results = filtered.length;
   if(text === ""){
     list.innerHTML="Here you will see all the results that match your search."
+    result.innerHTML = ""
   }
   else{
         if (filtered.length > 0) {
@@ -55,6 +56,7 @@ function searchUsers() {
     } else {
         list.innerHTML = "Nie znaleziono użytkownika";
         result.innerHTML = ""
+        
     }
   }
 }
