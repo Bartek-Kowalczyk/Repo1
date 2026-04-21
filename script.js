@@ -28,7 +28,7 @@ async function displayUsers() {
 
     } 
     catch (error) {
-        alert("There was an error with viewing the list");
+        alert("Wystąpił błąd w wyświetleniu listy.");
   }
 }
 displayUsers();
