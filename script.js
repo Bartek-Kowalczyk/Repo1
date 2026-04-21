@@ -15,9 +15,11 @@ async function displayUsers() {
         const list = document.getElementById("list");
         if(users.length > 0){
             list.innerHTML = users.map(user => `
-                <li>
-                    Imię: <span class="name"> ${user.name} </span>
-                    Email: <span class="email"> ${user.email} </span>
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-3 mb-2 shadow-sm">
+                    <div>
+                        <div class="fw-semibold">${user.name}</div>
+                        <div class="text-muted small">${user.email}</div>
+                    </div>
                 </li>
             `).join("");}
         else{
@@ -32,49 +34,52 @@ async function displayUsers() {
 displayUsers();
 
 function searchUsers() {
-  const list = document.getElementById("searchp");
+  const list = document.getElementById("list");
   const text = document.getElementById("searchtxt").value.toLowerCase().trim();
   const result = document.getElementById("resultsp");
-  const mode = document.getElementById("searchMode").value;
 
-  const filtered = users.filter(user => {
-    if(mode === "name"){
-      return user.name.toLowerCase().includes(text);
-    }
-    if(mode === "email"){
-      return user.email.toLowerCase().includes(text);
-    }
-    return(
-      user.name.toLowerCase().includes(text) ||
-      user.email.toLowerCase().includes(text)
-    )
-});
+
+  const filtered = users.filter(user =>
+    user.name.toLowerCase().includes(text) ||
+    user.email.toLowerCase().includes(text)
+  );
+  const sortinfo = document.getElementById("sortP");
   filtered.sort((a, b) => {
     if (sortDirection == "asc"){
+      sortinfo.innerHTML = "Kierunek sortowania: A-Z"
       return a.name.localeCompare(b.name);
     }
     else{
+      sortinfo.innerHTML = "Kierunek sortowania: Z-A"
       return b.name.localeCompare(a.name);
     }
   })
     const results = filtered.length;
   if(text === ""){
-    list.innerHTML="Here you will see all the results that match your search."
-    result.innerHTML = ""
+    list.innerHTML = filtered.map(user => `
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-3 mb-2 shadow-sm">
+                    <div>
+                        <div class="fw-semibold">${user.name}</div>
+                        <div class="text-muted small">${user.email}</div>
+                    </div>
+                </li>
+            `).join("");
+    result.innerHTML = "Tutaj zobaczysz ilość rezultatów."
   }
   else{
         if (filtered.length > 0) {
             list.innerHTML = filtered.map(user => `
-            <li>
-                Imię: <span class="name">${highlight(user.name, text)}</span>
-                Email: <span class="email">${highlight(user.email, text)}</span>
-            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-3 mb-2 shadow-sm">
+                    <div>
+                        <div class="fw-semibold">${highlight(user.name, text)}</div>
+                        <div class="text-muted small">${highlight(user.email, text)}</div>
+                    </div>
+                </li>
             `).join("");
-            result.innerHTML=`Znaleziono: ${results}`;
+            result.innerHTML=`Znaleziono: ${results} z ${users.length}`;
     } else {
         list.innerHTML = "Nie znaleziono użytkownika";
-        result.innerHTML = ""
-        
+        result.innerHTML = `Znaleziono: ${results} z ${users.length}`
     }
   }
 }
@@ -89,20 +94,20 @@ function highlight(text, query){
 function resetSearch() {
   const input = document.getElementById("searchtxt");
   const list = document.getElementById("list");
-  const info = document.getElementById("searchp");
   const result = document.getElementById("resultsp");
 
   input.value = "";
 
   list.innerHTML = users.map(user => `
-    <li>
-      Imię: <span class="name">${user.name}</span>
-      Email: <span class="email">${user.email}</span>
-    </li>
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-3 mb-2 shadow-sm">
+                    <div>
+                        <div class="fw-semibold">${user.name}</div>
+                        <div class="text-muted small">${user.email}</div>
+                    </div>
+                </li>
   `).join("");
 
-  info.innerHTML = "Here you will see all the results that match your search.";
-  result.innerHTML = "";
+  result.innerHTML = "Tutaj zobaczysz ilość rezultatów.";
 }
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {

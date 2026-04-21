@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Frontend task</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
     <script src="script.js"></script>
 </head>
-<body>
-    <div id="container">
-        <h1>Użytkownicy</h1>
-        <ul id="list"></ul>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="text-center mb-4">Użytkownicy</h1>
 
-        <select id="searchMode">
-            <option value="both">Name & Email</option>
-            <option value="name">Name</option>
-            <option value="email">Email</option>
-        </select>
-        <input type="text" placeholder="Search names/emails" id="searchtxt" oninput="searchUsers()">
-        <input type="button" onclick="resetSearch()" value="Reset">
-        <input type="button" onclick="toggleSort()" value="Sort direction">
-        <p id="searchp">Here you will see all the results that match your search.<br>
-        Tip: You can click "Escape" to reset your search.</p>
-        <p id="resultsp">Here you will see the number of results.</p>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">🔍</span>
+                        <input type="text" placeholder="Wyszukuj imiona/nazwiska" id="searchtxt" oninput="searchUsers()" class="form-control">
+                        
+                    </div>
+                    <button class="btn btn-primary" onclick="toggleSort()">Kierunek sortowania</button>
+                    <p id="sortP" class="d-inline-block alert alert-info py-2 mb-2">Kierunek sortowania: A-Z</p>
+                    <p class="d-inline-block alert alert-warning py-2 mb-2">Możesz kliknąć przycisk Escape aby zresetować wyszukiwanie.</p>
+                    <span id="resultsp" class="badge bg-primary">Tutaj zobaczysz ilość rezultatów.</span>
+                    <ul class="list-group list-group-flush mt-3" id="list">header1</ul>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
