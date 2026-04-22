@@ -14,14 +14,27 @@ async function displayUsers() {
         
         const list = document.getElementById("list");
         if(users.length > 0){
-            list.innerHTML = users.map(user => `
-                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-3 mb-2 shadow-sm">
-                    <div>
-                        <div class="fw-semibold">${user.name}</div>
-                        <div class="text-muted small">${user.email}</div>
-                    </div>
-                </li>
-            `).join("");}
+             list.innerHTML = "";
+            const fragment = document.createDocumentFragment();
+
+            users.forEach(user => {
+                const wrapper = document.createElement("li");
+                wrapper.classList.add("list-group-item", "list-group-item-action");
+
+                const name = document.createElement("div");
+                name.classList.add("fw-semibold");
+                name.textContent = user.name;
+
+                const email = document.createElement("div");
+                email.classList.add("text-muted", "small");
+                email.textContent = user.email;
+
+                wrapper.append(name, email);
+                fragment.appendChild(wrapper);
+            });
+
+            list.appendChild(fragment);
+        }
         else{
             list.innerHTML="Nie ma danych w liście"
         }
@@ -33,63 +46,78 @@ async function displayUsers() {
 }
 displayUsers();
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 function searchUsers() {
   const list = document.getElementById("list");
   const text = document.getElementById("searchtxt").value.toLowerCase().trim();
   const result = document.getElementById("resultsp");
 
+  list.innerHTML = "";
+  const fragment = document.createDocumentFragment();
 
   const filtered = users.filter(user =>
     user.name.toLowerCase().includes(text) ||
     user.email.toLowerCase().includes(text)
   );
-  const sortinfo = document.getElementById("sortP");
   filtered.sort((a, b) => {
     if (sortDirection == "asc"){
-      sortinfo.innerHTML = "Kierunek sortowania: A-Z"
       return a.name.localeCompare(b.name);
     }
     else{
-      sortinfo.innerHTML = "Kierunek sortowania: Z-A"
       return b.name.localeCompare(a.name);
     }
   })
     const results = filtered.length;
   if(text === ""){
-    list.innerHTML = filtered.map(user => `
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-3 mb-2 shadow-sm">
-                    <div>
-                        <div class="fw-semibold">${user.name}</div>
-                        <div class="text-muted small">${user.email}</div>
-                    </div>
-                </li>
-            `).join("");
-    result.innerHTML = "Tutaj zobaczysz ilość rezultatów."
-  }
-  else{
-        if (filtered.length > 0) {
-            list.innerHTML = filtered.map(user => `
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-3 mb-2 shadow-sm">
-                    <div>
-                        <div class="fw-semibold">${highlight(user.name, text)}</div>
-                        <div class="text-muted small">${highlight(user.email, text)}</div>
-                    </div>
-                </li>
-            `).join("");
-            result.innerHTML=`Znaleziono: ${results} z ${users.length}`;
+    list.innerHTML = "";
+            const fragment = document.createDocumentFragment();
+
+            users.forEach(user => {
+                const wrapper = document.createElement("div");
+                wrapper.classList.add("list-group-item", "list-group-item-action");
+
+                const name = document.createElement("div");
+                name.classList.add("fw-semibold");
+                name.textContent = user.name;
+
+                const email = document.createElement("div");
+                email.classList.add("text-muted", "small");
+                email.textContent = user.email;
+
+                wrapper.append(name, email);
+                fragment.appendChild(wrapper);
+            });
+
+            list.appendChild(fragment);
+    }
+         if (filtered.length > 0) {
+
+            filtered.forEach(user => {
+            const item = document.createElement("div");
+            item.classList.add("list-group-item", "list-group-item-action");
+
+            const name = document.createElement("div");
+            name.classList.add("fw-semibold");
+            name.textContent = user.name;
+
+            const email = document.createElement("div");
+            email.classList.add("text-muted", "small");
+            email.textContent = user.email;
+
+            item.append(name, email);
+            fragment.appendChild(item);
+        });
+
+        list.appendChild(fragment);
+            result.textContent=`Znaleziono: ${results} z ${users.length}`;
     } else {
         list.innerHTML = "Nie znaleziono użytkownika";
-        result.innerHTML = `Znaleziono: ${results} z ${users.length}`
+        result.innerHTML = ``;
     }
-  }
 }
 
-function highlight(text, query){
-    if (!query) return text;
-
-    const regex = new RegExp(`(${query})`, "gi");
-    return text.replace(regex, "<mark>$1</mark>");
-}
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function resetSearch() {
   const input = document.getElementById("searchtxt");
@@ -98,24 +126,48 @@ function resetSearch() {
 
   input.value = "";
 
-  list.innerHTML = users.map(user => `
-                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-3 mb-2 shadow-sm">
-                    <div>
-                        <div class="fw-semibold">${user.name}</div>
-                        <div class="text-muted small">${user.email}</div>
-                    </div>
-                </li>
-  `).join("");
+  list.innerHTML = "";
+            const fragment = document.createDocumentFragment();
 
-  result.innerHTML = "Tutaj zobaczysz ilość rezultatów.";
+            users.forEach(user => {
+                const wrapper = document.createElement("li");
+                wrapper.classList.add("list-group-item", "list-group-item-action");
+
+                const name = document.createElement("div");
+                name.classList.add("fw-semibold");
+                name.textContent = user.name;
+
+                const email = document.createElement("div");
+                email.classList.add("text-muted", "small");
+                email.textContent = user.email;
+
+                wrapper.append(name, email);
+                fragment.appendChild(wrapper);
+            });
+
+            list.appendChild(fragment);
+
+  result.innerHTML = `Znaleziono: ${results} z ${users.length}`;
 }
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-        resetSearch();
-    }
-});
 
 function toggleSort(){
   sortDirection = sortDirection === "asc" ? "desc" : "asc";
   searchUsers();
 }
+
+const darkSwitch = document.getElementById("darkSwitch");
+
+if (localStorage.getItem("darkMode") === "on") {
+  document.body.classList.add("dark-mode");
+  darkSwitch.checked = true;
+}
+
+darkSwitch.addEventListener("change", () => {
+  if (darkSwitch.checked) {
+    document.body.classList.add("dark-mode");
+    localStorage.setItem("darkMode", "on");
+  } else {
+    document.body.classList.remove("dark-mode");
+    localStorage.setItem("darkMode", "off");
+  }
+});
