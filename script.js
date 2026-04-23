@@ -47,7 +47,6 @@ function createUserList(user){
     li.append(name, email);
     return li;
 }
-
 function renderUserList(users,){
     elements.list.innerHTML = "";
 
@@ -93,6 +92,7 @@ function searchUsers(){
 
     renderUserList(result);
     updateResultsInfo(result.length, state.users.length)
+    console.log("Szukanie")
 }
 
 function resetSearch(){
@@ -123,13 +123,14 @@ function darkMode(){
 
 async function initialize(){
     try {
-      showLoader();
+        showLoader();
         state.users = await fetchUsers();
         renderUserList(state.users);
         updateResultsInfo(state.users.length, state.users.length);
         const debouncedSearch = debounce(searchUsers, 400);
         elements.searchInput.addEventListener("input", debouncedSearch);
         darkMode();
+        applySystemTheme();
     } catch (error){
         console.error(error);
         alert("Wystąpił błąd w wyświetleniu listy.");
@@ -146,4 +147,26 @@ function hideLoader(){
   elements.loader.classList.add("hidden");
   elements.list.classList.remove("hidden");
 }
+
+function applySystemTheme() {
+  const STORAGE_KEY = "theme";
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+  const savedTheme = localStorage.getItem(STORAGE_KEY);
+
+  const isDark = savedTheme
+    ? savedTheme === "dark"
+    : mediaQuery.matches;
+
+  document.body.classList.toggle("dark-mode", isDark);
+  elements.darkSwitch.checked = isDark;
+
+  elements.darkSwitch.addEventListener("change", () => {
+    const enabled = elements.darkSwitch.checked;
+    document.body.classList.toggle("dark-mode", enabled);
+    localStorage.setItem(STORAGE_KEY, enabled ? "dark" : "light");
+  });
+
+}
+applySystemTheme();
 initialize();
