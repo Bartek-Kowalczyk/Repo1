@@ -46,8 +46,6 @@ async function displayUsers() {
 }
 displayUsers();
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------
-
 function searchUsers() {
   const list = document.getElementById("list");
   const text = document.getElementById("searchtxt").value.toLowerCase().trim();
@@ -56,10 +54,13 @@ function searchUsers() {
   list.innerHTML = "";
   const fragment = document.createDocumentFragment();
 
-  const filtered = users.filter(user =>
-    user.name.toLowerCase().includes(text) ||
-    user.email.toLowerCase().includes(text)
-  );
+  let filtered = text === ""
+    ? [...users]
+    : users.filter(user =>
+        user.name.toLowerCase().includes(text) ||
+        user.email.toLowerCase().includes(text)
+      );
+      
   filtered.sort((a, b) => {
     if (sortDirection == "asc"){
       return a.name.localeCompare(b.name);
@@ -68,56 +69,30 @@ function searchUsers() {
       return b.name.localeCompare(a.name);
     }
   })
-    const results = filtered.length;
-  if(text === ""){
-    list.innerHTML = "";
-            const fragment = document.createDocumentFragment();
 
-            users.forEach(user => {
-                const wrapper = document.createElement("div");
-                wrapper.classList.add("list-group-item", "list-group-item-action");
+         filtered.forEach(user => {
+    const li = document.createElement("li");
+    li.className = "list-group-item list-group-item-action";
 
-                const name = document.createElement("div");
-                name.classList.add("fw-semibold");
-                name.textContent = user.name;
+    const name = document.createElement("div");
+    name.className = "fw-semibold";
+    name.textContent = user.name;
 
-                const email = document.createElement("div");
-                email.classList.add("text-muted", "small");
-                email.textContent = user.email;
+    const email = document.createElement("div");
+    email.className = "text-muted small";
+    email.textContent = user.email;
 
-                wrapper.append(name, email);
-                fragment.appendChild(wrapper);
-            });
+    li.append(name, email);
+    fragment.appendChild(li);
+  });
 
-            list.appendChild(fragment);
-    }
-         if (filtered.length > 0) {
+  list.appendChild(fragment);
 
-            filtered.forEach(user => {
-            const item = document.createElement("div");
-            item.classList.add("list-group-item", "list-group-item-action");
-
-            const name = document.createElement("div");
-            name.classList.add("fw-semibold");
-            name.textContent = user.name;
-
-            const email = document.createElement("div");
-            email.classList.add("text-muted", "small");
-            email.textContent = user.email;
-
-            item.append(name, email);
-            fragment.appendChild(item);
-        });
-
-        list.appendChild(fragment);
-            result.textContent=`Znaleziono: ${results} z ${users.length}`;
-    } else {
-        list.innerHTML = "Nie znaleziono użytkownika";
-        result.innerHTML = ``;
-    }
+  result.textContent =
+    filtered.length > 0
+      ? `Znaleziono: ${filtered.length} z ${users.length}`
+      : "Nie znaleziono użytkownika";
 }
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function resetSearch() {
   const input = document.getElementById("searchtxt");

@@ -23,4 +23,5 @@ body:not(.dark-mode) .list-group-item{
 }
 body.dark-mode .list-group-item:hover{
     color: #121212;
+    background-color: lightgrey;
 }
