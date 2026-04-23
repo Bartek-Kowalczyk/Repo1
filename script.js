@@ -7,7 +7,8 @@ const elements = {
     list: document.getElementById("list"),
     searchInput: document.getElementById("searchtxt"),
     results: document.getElementById("resultsp"),
-    darkSwitch: document.getElementById("darkSwitch")
+    darkSwitch: document.getElementById("darkSwitch"),
+    loader: document.getElementById("loader")
 };
 
 const url = "https://jsonplaceholder.typicode.com/users";
@@ -122,6 +123,7 @@ function darkMode(){
 
 async function initialize(){
     try {
+      showLoader();
         state.users = await fetchUsers();
         renderUserList(state.users);
         updateResultsInfo(state.users.length, state.users.length);
@@ -131,6 +133,17 @@ async function initialize(){
     } catch (error){
         console.error(error);
         alert("Wystąpił błąd w wyświetleniu listy.");
+    } finally{
+      hideLoader();
     }
+}
+
+function showLoader(){
+  elements.loader.classList.remove("hidden");
+  elements.list.classList.add("hidden");
+}
+function hideLoader(){
+  elements.loader.classList.add("hidden");
+  elements.list.classList.remove("hidden");
 }
 initialize();
