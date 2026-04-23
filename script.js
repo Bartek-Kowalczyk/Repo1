@@ -12,6 +12,17 @@ const elements = {
 
 const url = "https://jsonplaceholder.typicode.com/users";
 
+function debounce(fn, delay = 300){
+  let timeoutID;
+
+  return function(...args){
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  }
+}
+
 async function fetchUsers() {
     const response = await fetch(url);
     if(!response.ok){
@@ -114,6 +125,8 @@ async function initialize(){
         state.users = await fetchUsers();
         renderUserList(state.users);
         updateResultsInfo(state.users.length, state.users.length);
+        const debouncedSearch = debounce(searchUsers, 400);
+        elements.searchInput.addEventListener("input", debouncedSearch);
         darkMode();
     } catch (error){
         console.error(error);
