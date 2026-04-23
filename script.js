@@ -79,7 +79,7 @@ function searchUsers() {
     name.textContent = user.name;
 
     const email = document.createElement("div");
-    email.className = "text-muted small";
+    email.className = "user-email small";
     email.textContent = user.email;
 
     li.append(name, email);
@@ -91,7 +91,7 @@ function searchUsers() {
   result.textContent =
     filtered.length > 0
       ? `Znaleziono: ${filtered.length} z ${users.length}`
-      : "Nie znaleziono użytkownika";
+      : `Znaleziono: ${filtered.length} z ${users.length}`;
 }
 
 function resetSearch() {
@@ -122,7 +122,7 @@ function resetSearch() {
 
             list.appendChild(fragment);
 
-  result.innerHTML = `Znaleziono: ${results} z ${users.length}`;
+  result.textContent = `Znaleziono: ${users.length} z ${users.length}`;
 }
 
 function toggleSort(){

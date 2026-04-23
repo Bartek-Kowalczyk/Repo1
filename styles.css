@@ -22,6 +22,10 @@ body:not(.dark-mode) .list-group-item{
     background-color: #0d6efd;
 }
 body.dark-mode .list-group-item:hover{
-    color: #121212;
-    background-color: lightgrey;
+   color: #121212;
+    background-color: #e4e3e3; 
+}
+body.dark-mode .list-group-item:hover .text-muted{
+    color: #121212 !important;
+    background-color: #e4e3e3;
 }
