@@ -7,10 +7,22 @@ const elements = {
     list: document.getElementById("list"),
     searchInput: document.getElementById("searchtxt"),
     results: document.getElementById("resultsp"),
-    darkSwitch: document.getElementById("darkSwitch")
+    darkSwitch: document.getElementById("darkSwitch"),
+    loader: document.getElementById("loader")
 };
 
 const url = "https://jsonplaceholder.typicode.com/users";
+
+function debounce(fn, delay = 300){
+  let timeoutID;
+
+  return function(...args){
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  }
+}
 
 async function fetchUsers() {
     const response = await fetch(url);
@@ -35,8 +47,7 @@ function createUserList(user){
     li.append(name, email);
     return li;
 }
-
-function renderUserList(users,){
+function renderUserList(users){
     elements.list.innerHTML = "";
 
     if(users.length === 0){
@@ -81,12 +92,7 @@ function searchUsers(){
 
     renderUserList(result);
     updateResultsInfo(result.length, state.users.length)
-}
-
-function resetSearch(){
-    elements.searchInput.value = "";
-    renderUserList(state.users);
-    updateResultsInfo(state.users.length, state.users.length);
+    console.log("Szukanie")
 }
 
 function toggleSort(){
@@ -111,13 +117,50 @@ function darkMode(){
 
 async function initialize(){
     try {
+        showLoader();
         state.users = await fetchUsers();
         renderUserList(state.users);
         updateResultsInfo(state.users.length, state.users.length);
+        const debouncedSearch = debounce(searchUsers, 400);
+        elements.searchInput.addEventListener("input", debouncedSearch);
         darkMode();
+        applySystemTheme();
     } catch (error){
         console.error(error);
         alert("Wystąpił błąd w wyświetleniu listy.");
+    } finally{
+      hideLoader();
     }
 }
+
+function showLoader(){
+  elements.loader.classList.remove("hidden");
+  elements.list.classList.add("hidden");
+}
+function hideLoader(){
+  elements.loader.classList.add("hidden");
+  elements.list.classList.remove("hidden");
+}
+
+function applySystemTheme() {
+  const STORAGE_KEY = "theme";
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+  const savedTheme = localStorage.getItem(STORAGE_KEY);
+
+  const isDark = savedTheme
+    ? savedTheme === "dark"
+    : mediaQuery.matches;
+
+  document.body.classList.toggle("dark-mode", isDark);
+  elements.darkSwitch.checked = isDark;
+
+  elements.darkSwitch.addEventListener("change", () => {
+    const enabled = elements.darkSwitch.checked;
+    document.body.classList.toggle("dark-mode", enabled);
+    localStorage.setItem(STORAGE_KEY, enabled ? "dark" : "light");
+  });
+
+}
+applySystemTheme();
 initialize();

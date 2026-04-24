@@ -2,6 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frontend task</title>
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
@@ -15,7 +16,7 @@
 
                     <div class="input-group mb-2">
                         <span class="input-group-text">🔍</span>
-                        <input type="text" placeholder="Wyszukuj imiona/nazwiska" id="searchtxt" oninput="searchUsers()" class="form-control">
+                        <input type="text" placeholder="Wyszukuj imiona/nazwiska" id="searchtxt" class="form-control">
                         
                     </div>
                     <button class="btn btn-primary" onclick="toggleSort()">⬆️⬇️</button>
@@ -26,6 +27,7 @@
                             <span class="badge bg-primary">Tryb ciemny</span>
                         </label>
                     </div>
+                    <div id="loader" class="loader hidden"></div>
                     <ul class="list-group list-group-flush mt-3" id="list"></ul>
                 </div>
             </div>
