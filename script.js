@@ -47,7 +47,7 @@ function createUserList(user){
     li.append(name, email);
     return li;
 }
-function renderUserList(users,){
+function renderUserList(users){
     elements.list.innerHTML = "";
 
     if(users.length === 0){
@@ -93,12 +93,6 @@ function searchUsers(){
     renderUserList(result);
     updateResultsInfo(result.length, state.users.length)
     console.log("Szukanie")
-}
-
-function resetSearch(){
-    elements.searchInput.value = "";
-    renderUserList(state.users);
-    updateResultsInfo(state.users.length, state.users.length);
 }
 
 function toggleSort(){
