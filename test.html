@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>idk</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="nudy.css">
+    <script type="module" src="nudy.js" defer></script>
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="text-center mb-4">Użytkownicy</h1>
+
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">🔍</span>
+                        <input type="text" placeholder="Wyszukuj imiona/nazwiska" id="searchtxt" class="form-control">
+                        
+                    </div>
+                    <button class="btn btn-primary" onclick="toggleSort()">⬆️⬇️</button>
+                    <span id="resultsp" class="badge bg-primary">Znaleziono: 10 z 10</span>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="darkSwitch">
+                        <label class="form-check-label" for="darkSwitch">
+                            <span class="badge bg-primary">Tryb ciemny</span>
+                        </label>
+                    </div>
+                    <div id="loader" class="loader hidden"></div>
+                    <ul class="list-group list-group-flush mt-3" id="list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
