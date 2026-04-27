@@ -29,7 +29,6 @@ body.dark-mode .list-group-item:hover .text-muted{
     color: #121212 !important;
     background-color: #e4e3e3;
 }
-
 .loader{
     width: 48px;
     height: 48px;
@@ -48,4 +47,9 @@ body.dark-mode .list-group-item:hover .text-muted{
     to{
         transform: rotate(360deg);
     }
+}
+.container {
+ max-width: 1200px;
+  padding: 1rem;
+  margin: 0 auto;
 }
